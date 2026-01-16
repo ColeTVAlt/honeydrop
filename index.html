@@ -2,56 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>honeydrop</title>
+    <title>FUJI_CORE_V1</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="stars-overlay"></div>
-
-    <div class="container">
-        <h1 class="logo-text">honeydrop</h1>
-
-        <div class="search-container">
-            <input type="text" id="search-input" placeholder="Search the web or enter a URL..." onkeydown="handleSearch(event)">
-            <div class="search-icon">🔍</div>
-        </div>
-
-        <p class="section-label">Quick apps</p>
+    <div id="fuji-engine">
+        <div class="layer sky" id="sky"></div>
         
-        <div class="app-grid">
-            <div class="app-card" onclick="launch('https://www.youtube.com')">
-                <div class="app-icon">📹</div>
-                <span>YouTube</span>
-            </div>
-            <div class="app-card" onclick="launch('https://www.google.com')">
-                <div class="app-icon">🔍</div>
-                <span>Google</span>
-            </div>
-            <div class="app-card" onclick="launch('https://discord.com')">
-                <div class="app-icon">💬</div>
-                <span>Discord</span>
-            </div>
-            <div class="app-card" onclick="launch('https://www.tiktok.com')">
-                <div class="app-icon">🎵</div>
-                <span>TikTok</span>
-            </div>
-            <div class="app-card" onclick="launch('https://www.roblox.com')">
-                <div class="app-icon">🎮</div>
-                <span>Roblox</span>
-            </div>
-            <div class="app-card" onclick="launch('https://github.com')">
-                <div class="app-icon">🐙</div>
-                <span>GitHub</span>
-            </div>
-        </div>
+        <div class="layer celestial" id="celestial"></div>
 
-        <div id="proxy-wrap">
-            <div class="proxy-nav">
-                <button onclick="closeProxy()">✕ Close</button>
-                <span id="proxy-status">Secure Connection: Encrypted</span>
+        <div class="layer mountain"></div>
+
+        <canvas id="weather-layer"></canvas>
+
+        <div class="layer glass-overlay"></div>
+
+        <div id="terminal-overlay">
+            <div class="terminal-content">
+                <p>HONEYDROP_OS V2.0 // ENCRYPTED_CONNECTION</p>
+                <input type="password" id="terminal-input" placeholder="ACCESS_KEY">
             </div>
-            <iframe id="proxy-frame"></iframe>
         </div>
     </div>
 

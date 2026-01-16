@@ -2,29 +2,147 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>FUJI_CORE_V1</title>
-    <link rel="stylesheet" href="style.css">
+    <title>FUJI_CORE_V2 // 2026</title>
+    <style>
+        :root {
+            --sky-top: #0f2027;
+            --sky-bottom: #2c5364;
+            --fuji-snow: #ffffff;
+            --fuji-shadow: #2d3436;
+        }
+
+        body, html { margin: 0; padding: 0; overflow: hidden; height: 100vh; background: #000; font-family: 'Courier New', monospace; }
+
+        /* Time-based sky gradient */
+        #viewport {
+            position: relative; width: 100vw; height: 100vh;
+            background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
+            transition: background 3s ease;
+        }
+
+        /* The Sun/Moon */
+        #celestial {
+            position: absolute; width: 80px; height: 80px;
+            background: #fff; border-radius: 50%;
+            box-shadow: 0 0 40px #fff;
+            top: 15%; left: 70%; transition: 2s ease-in-out;
+        }
+
+        /* SVG Mountain - This replaces the broken image link */
+        #mountain-svg {
+            position: absolute; bottom: -10px; width: 100%; height: 60%;
+            filter: drop-shadow(0 0 20px rgba(0,0,0,0.5));
+        }
+
+        #weather-canvas {
+            position: absolute; inset: 0; pointer-events: none; z-index: 10;
+        }
+
+        /* Secret Terminal */
+        #honeydrop-terminal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 100; color: #0f0;
+        }
+
+        .input-line { border: none; background: transparent; color: #0f0; outline: none; border-bottom: 1px solid #0f0; width: 300px; font-size: 20px; text-align: center; }
+    </style>
 </head>
 <body>
-    <div id="fuji-engine">
-        <div class="layer sky" id="sky"></div>
-        
-        <div class="layer celestial" id="celestial"></div>
 
-        <div class="layer mountain"></div>
+    <div id="viewport">
+        <div id="celestial"></div>
 
-        <canvas id="weather-layer"></canvas>
+        <svg id="mountain-svg" viewBox="0 0 1000 400" preserveAspectRatio="none">
+            <path d="M0,400 L350,150 L500,50 L650,150 L1000,400 Z" fill="#2d3436" />
+            <path d="M350,150 L500,50 L650,150 Q500,180 350,150 Z" fill="#ffffff" />
+        </svg>
 
-        <div class="layer glass-overlay"></div>
-
-        <div id="terminal-overlay">
-            <div class="terminal-content">
-                <p>HONEYDROP_OS V2.0 // ENCRYPTED_CONNECTION</p>
-                <input type="password" id="terminal-input" placeholder="ACCESS_KEY">
-            </div>
-        </div>
+        <canvas id="weather-canvas"></canvas>
     </div>
 
-    <script src="script.js"></script>
+    <div id="honeydrop-terminal">
+        <h2>HONEYDROP_OS V2.0 // BYPASS_READY</h2>
+        <input type="password" id="pass-key" class="input-line" placeholder="ENTER ACCESS KEY">
+    </div>
+
+    <script>
+        const canvas = document.getElementById('weather-canvas');
+        const ctx = canvas.getContext('2d');
+        const celestial = document.getElementById('celestial');
+        const viewport = document.getElementById('viewport');
+
+        // Initial setup
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // 1. COMPLEX ENVIRONMENT LOGIC
+        function setEnvironment() {
+            const hr = new Date().getHours();
+            if (hr >= 6 && hr < 11) { // Morning
+                viewport.style.setProperty('--sky-top', '#ff9a9e');
+                viewport.style.setProperty('--sky-bottom', '#fad0c4');
+                celestial.style.background = "#fff9c4";
+            } else if (hr >= 11 && hr < 17) { // Midday
+                viewport.style.setProperty('--sky-top', '#89f7fe');
+                viewport.style.setProperty('--sky-bottom', '#66a6ff');
+            } else { // Evening/Night
+                viewport.style.setProperty('--sky-top', '#0f2027');
+                viewport.style.setProperty('--sky-bottom', '#2c5364');
+                celestial.style.boxShadow = "0 0 60px #fff";
+            }
+        }
+
+        // 2. PARTICLE REMIX (Chaos Weather)
+        let petals = [];
+        class Petal {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * -canvas.height;
+                this.w = Math.random() * 8 + 4;
+                this.h = Math.random() * 5 + 2;
+                this.speed = Math.random() * 1.5 + 0.5;
+                this.angle = Math.random() * 360;
+            }
+            update() {
+                this.y += this.speed;
+                this.x += Math.sin(this.y / 50);
+                this.angle += 1;
+                if (this.y > canvas.height) this.y = -20;
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle * Math.PI / 180);
+                ctx.fillStyle = "#ffb7c5"; // Pink for the vibes
+                ctx.beginPath();
+                ctx.ellipse(0, 0, this.w, this.h, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < 60; i++) petals.push(new Petal());
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            petals.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+
+        // 3. THE SECRET GESTURE
+        let tapCount = 0;
+        viewport.addEventListener('touchstart', () => {
+            tapCount++;
+            if (tapCount >= 5) { // 5 Taps for the tablet
+                document.getElementById('honeydrop-terminal').style.display = 'flex';
+                tapCount = 0;
+            }
+            setTimeout(() => tapCount = 0, 2000);
+        });
+
+        setEnvironment();
+        animate();
+    </script>
 </body>
 </html>

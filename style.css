@@ -1,60 +1,38 @@
 :root {
-    --bg: #0a0a0a;
-    --card-bg: rgba(255, 255, 255, 0.03);
-    --border: rgba(255, 255, 255, 0.1);
-    --accent: #3498db;
+    --fuji-blue: #a5c9e1;
+    --fuji-pink: #ffb7c5; /* Cherry Blossom */
+    --fuji-night: #0a0b1e;
 }
 
-body {
-    margin: 0; background: var(--bg); color: white;
-    font-family: 'Inter', sans-serif; overflow: hidden;
-    display: flex; justify-content: center; align-items: center; height: 100vh;
+body, html { margin: 0; overflow: hidden; height: 100vh; background: #000; }
+
+#fuji-engine { position: relative; width: 100vw; height: 100vh; perspective: 1000px; }
+
+.layer { position: absolute; inset: 0; background-size: cover; background-position: center; transition: 2s cubic-bezier(0.4, 0, 0.2, 1); }
+
+.sky { background: linear-gradient(to bottom, var(--fuji-blue), #ffffff); z-index: 1; }
+
+.celestial { 
+    width: 100px; height: 100px; border-radius: 50%; 
+    background: #fff; box-shadow: 0 0 50px #fff;
+    top: 15%; left: 70%; z-index: 2;
 }
 
-.stars-overlay {
-    position: fixed; inset: 0; 
-    background-image: radial-gradient(white 1px, transparent 1px);
-    background-size: 50px 50px; opacity: 0.05; z-index: -1;
+.mountain { 
+    background-image: url('https://raw.githubusercontent.com/RizzAI/Assets/main/fuji_transparent.png'); /* You'll need a transparent Fuji PNG here */
+    z-index: 3; transform: translateZ(50px);
 }
 
-.container { width: 90%; max-width: 700px; text-align: center; }
+#weather-layer { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
 
-.logo-text { font-size: 3rem; font-weight: 200; letter-spacing: 5px; margin-bottom: 40px; opacity: 0.8; }
-
-.search-container {
-    position: relative; background: var(--card-bg);
-    border: 1px solid var(--border); border-radius: 12px;
-    padding: 15px 25px; display: flex; align-items: center; margin-bottom: 40px;
+.glass-overlay {
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+    backdrop-filter: blur(1px); z-index: 5;
 }
 
-#search-input {
-    background: transparent; border: none; color: white; width: 100%;
-    font-size: 1.1rem; outline: none;
+/* Terminal Styling */
+#terminal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+    display: none; justify-content: center; align-items: center; z-index: 100;
 }
-
-.section-label { text-align: left; opacity: 0.4; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
-
-.app-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;
-}
-
-.app-card {
-    background: var(--card-bg); border: 1px solid var(--border);
-    border-radius: 12px; padding: 20px; cursor: pointer; transition: 0.3s;
-}
-
-.app-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-5px); border-color: var(--accent); }
-
-.app-icon { font-size: 2rem; margin-bottom: 10px; }
-.app-card span { font-size: 0.9rem; opacity: 0.7; }
-
-/* Proxy Viewer Overlay */
-#proxy-wrap {
-    position: fixed; inset: 0; background: #000; z-index: 1000;
-    display: none; flex-direction: column;
-}
-
-.proxy-nav { background: #111; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
-.proxy-nav button { background: #222; border: none; color: white; cursor: pointer; padding: 5px 15px; border-radius: 5px; }
-
-#proxy-frame { flex: 1; border: none; background: white; }
+.terminal-content { font-family: 'Courier New', monospace; color: #0f0; }

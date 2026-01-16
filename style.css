@@ -1,0 +1,60 @@
+:root {
+    --bg: #0a0a0a;
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --border: rgba(255, 255, 255, 0.1);
+    --accent: #3498db;
+}
+
+body {
+    margin: 0; background: var(--bg); color: white;
+    font-family: 'Inter', sans-serif; overflow: hidden;
+    display: flex; justify-content: center; align-items: center; height: 100vh;
+}
+
+.stars-overlay {
+    position: fixed; inset: 0; 
+    background-image: radial-gradient(white 1px, transparent 1px);
+    background-size: 50px 50px; opacity: 0.05; z-index: -1;
+}
+
+.container { width: 90%; max-width: 700px; text-align: center; }
+
+.logo-text { font-size: 3rem; font-weight: 200; letter-spacing: 5px; margin-bottom: 40px; opacity: 0.8; }
+
+.search-container {
+    position: relative; background: var(--card-bg);
+    border: 1px solid var(--border); border-radius: 12px;
+    padding: 15px 25px; display: flex; align-items: center; margin-bottom: 40px;
+}
+
+#search-input {
+    background: transparent; border: none; color: white; width: 100%;
+    font-size: 1.1rem; outline: none;
+}
+
+.section-label { text-align: left; opacity: 0.4; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+
+.app-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;
+}
+
+.app-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px; cursor: pointer; transition: 0.3s;
+}
+
+.app-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-5px); border-color: var(--accent); }
+
+.app-icon { font-size: 2rem; margin-bottom: 10px; }
+.app-card span { font-size: 0.9rem; opacity: 0.7; }
+
+/* Proxy Viewer Overlay */
+#proxy-wrap {
+    position: fixed; inset: 0; background: #000; z-index: 1000;
+    display: none; flex-direction: column;
+}
+
+.proxy-nav { background: #111; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+.proxy-nav button { background: #222; border: none; color: white; cursor: pointer; padding: 5px 15px; border-radius: 5px; }
+
+#proxy-frame { flex: 1; border: none; background: white; }

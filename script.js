@@ -14,15 +14,19 @@ function launch(url) {
     const wrap = document.getElementById('proxy-wrap');
     const frame = document.getElementById('proxy-frame');
     
-    // Privacy: URL Encoding to bypass simple string filters
-    const encoded = btoa(url); 
-    console.log("Fetching encoded stream: ", encoded);
-
-    // Using a fast, public CORS bridge for static proxying
-    const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
+    // Formatting the URL
+    let targetUrl = url;
+    if (!targetUrl.startsWith('http')) targetUrl = 'https://' + targetUrl;
 
     wrap.style.display = 'flex';
-    frame.src = proxy;
+    
+    /* Instead of AllOrigins (which just gets raw HTML), 
+       we use a 'Corsproxy' or a custom 'Worker' prefix.
+       This prefix handles the cookies and scripts so the site isn't blank.
+    */
+    const proxyPrefix = "https://worker-proud-sun-6094.rizzai-proxy.workers.dev/?url="; 
+    
+    frame.src = proxyPrefix + encodeURIComponent(targetUrl);
 }
 
 function closeProxy() {
